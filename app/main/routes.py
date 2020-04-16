@@ -161,3 +161,10 @@ def study():
 @login_required
 def course_1():
     return render_template('1_course.html', title=_('1 КУРС'))
+
+
+@bp.route('/integrals', methods=['GET', 'POST'])
+@login_required
+def integrals():
+    return render_template('integrals.html', title=_('Интегралы'))
+
