@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
 import os
@@ -16,7 +17,7 @@ db = SQLAlchemy()
 migrate = Migrate()
 login = LoginManager()
 login.login_view = 'auth.login'
-login.login_message = _l('Please log in to access this page.')
+login.login_message = _l('Пожалуйста, войдите в свой профиль, чтобы получить доступ к странице.')
 mail = Mail()
 bootstrap = Bootstrap()
 moment = Moment()

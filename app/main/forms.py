@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from flask import request
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField
@@ -7,10 +8,10 @@ from app.models import User
 
 
 class EditProfileForm(FlaskForm):
-    username = StringField(_l('Username'), validators=[DataRequired()])
-    about_me = TextAreaField(_l('About me'),
+    username = StringField(_l('Имя пользовтеля'), validators=[DataRequired()])
+    about_me = TextAreaField(_l('Расскажите о себе'),
                              validators=[Length(min=0, max=140)])
-    submit = SubmitField(_l('Submit'))
+    submit = SubmitField(_l('Создать'))
 
     def __init__(self, original_username, *args, **kwargs):
         super(EditProfileForm, self).__init__(*args, **kwargs)
@@ -20,12 +21,12 @@ class EditProfileForm(FlaskForm):
         if username.data != self.original_username:
             user = User.query.filter_by(username=self.username.data).first()
             if user is not None:
-                raise ValidationError(_('Please use a different username.'))
+                raise ValidationError(_('Упс! Это имя уже занято, пожалуйста используйте другое.'))
 
 
 class PostForm(FlaskForm):
-    post = TextAreaField(_l('Say something'), validators=[DataRequired()])
-    submit = SubmitField(_l('Submit'))
+    post = TextAreaField(_l('Здесь вас услышат'), validators=[DataRequired()])
+    submit = SubmitField(_l('Публиковать'))
 
 
 class SearchForm(FlaskForm):

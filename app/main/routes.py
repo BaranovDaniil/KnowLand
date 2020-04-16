@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from datetime import datetime
 from flask import render_template, flash, redirect, url_for, request, g, \
     jsonify, current_app
@@ -33,7 +34,7 @@ def index():
                     language=language)
         db.session.add(post)
         db.session.commit()
-        flash(_('Your post is now live!'))
+        flash(_('Ваш пост опубликован!'))
         return redirect(url_for('main.index'))
     page = request.args.get('page', 1, type=int)
     posts = current_user.followed_posts().paginate(
@@ -85,7 +86,7 @@ def edit_profile():
         current_user.username = form.username.data
         current_user.about_me = form.about_me.data
         db.session.commit()
-        flash(_('Your changes have been saved.'))
+        flash(_('Изменения сохранены.'))
         return redirect(url_for('main.edit_profile'))
     elif request.method == 'GET':
         form.username.data = current_user.username
@@ -99,14 +100,14 @@ def edit_profile():
 def follow(username):
     user = User.query.filter_by(username=username).first()
     if user is None:
-        flash(_('User %(username)s not found.', username=username))
+        flash(_('Пользователь %(username)s не найден.', username=username))
         return redirect(url_for('main.index'))
     if user == current_user:
-        flash(_('You cannot follow yourself!'))
+        flash(_('Нельзя подписаться на себя любимого :( !'))
         return redirect(url_for('main.user', username=username))
     current_user.follow(user)
     db.session.commit()
-    flash(_('You are following %(username)s!', username=username))
+    flash(_('Вы подписались на %(username)s!', username=username))
     return redirect(url_for('main.user', username=username))
 
 
@@ -115,14 +116,14 @@ def follow(username):
 def unfollow(username):
     user = User.query.filter_by(username=username).first()
     if user is None:
-        flash(_('User %(username)s not found.', username=username))
+        flash(_('Пользователь %(username)s не найден.', username=username))
         return redirect(url_for('main.index'))
     if user == current_user:
-        flash(_('You cannot unfollow yourself!'))
+        flash(_('Вы не можете отписаться от себя, да и зачем?'))
         return redirect(url_for('main.user', username=username))
     current_user.unfollow(user)
     db.session.commit()
-    flash(_('You are not following %(username)s.', username=username))
+    flash(_('Вы только что отписались от %(username)s.', username=username))
     return redirect(url_for('main.user', username=username))
 
 

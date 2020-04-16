@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from flask import render_template, redirect, url_for, flash, request
 from werkzeug.urls import url_parse
 from flask_login import login_user, logout_user, current_user
@@ -18,7 +19,7 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user is None or not user.check_password(form.password.data):
-            flash(_('Invalid username or password'))
+            flash(_('Некорректная пара логин + пароль'))
             return redirect(url_for('auth.login'))
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get('next')
@@ -44,7 +45,7 @@ def register():
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash(_('Congratulations, you are now a registered user!'))
+        flash(_('Поздравляем! Вы зарегистрировались!'))
         return redirect(url_for('auth.login'))
     return render_template('auth/register.html', title=_('Register'),
                            form=form)
@@ -60,7 +61,7 @@ def reset_password_request():
         if user:
             send_password_reset_email(user)
         flash(
-            _('Check your email for the instructions to reset your password'))
+            _('Проверьте свою почту для получения возможности восстановить пароль.'))
         return redirect(url_for('auth.login'))
     return render_template('auth/reset_password_request.html',
                            title=_('Reset Password'), form=form)
@@ -77,6 +78,6 @@ def reset_password(token):
     if form.validate_on_submit():
         user.set_password(form.password.data)
         db.session.commit()
-        flash(_('Your password has been reset.'))
+        flash(_('Вашь пароль был изменён.'))
         return redirect(url_for('auth.login'))
     return render_template('auth/reset_password.html', form=form)
