@@ -43,7 +43,7 @@ def index():
         if posts.has_next else None
     prev_url = url_for('main.index', page=posts.prev_num) \
         if posts.has_prev else None
-    return render_template('index.html', title=_('Home'), form=form,
+    return render_template('index.html', title=_('Домашняя страница'), form=form,
                            posts=posts.items, next_url=next_url,
                            prev_url=prev_url)
 
@@ -58,7 +58,7 @@ def explore():
         if posts.has_next else None
     prev_url = url_for('main.explore', page=posts.prev_num) \
         if posts.has_prev else None
-    return render_template('index.html', title=_('Explore'),
+    return render_template('index.html', title=_('Чат'),
                            posts=posts.items, next_url=next_url,
                            prev_url=prev_url)
 
@@ -149,3 +149,9 @@ def search():
         if page > 1 else None
     return render_template('search.html', title=_('Search'), posts=posts,
                            next_url=next_url, prev_url=prev_url)
+
+
+@bp.route('/study', methods=['GET', 'POST'])
+@login_required
+def study():
+    return render_template('study_start.html', title=_('Начинаем учиться'))
