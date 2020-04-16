@@ -155,3 +155,9 @@ def search():
 @login_required
 def study():
     return render_template('study_start.html', title=_('Начинаем учиться'))
+
+
+@bp.route('/course_1', methods=['GET', 'POST'])
+@login_required
+def course_1():
+    return render_template('1_course.html', title=_('1 КУРС'))
